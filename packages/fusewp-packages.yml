@@ -1,0 +1,84 @@
+generated: '2026-08-12'
+method: searched
+source: https://api.wordpress.org/plugins/info/1.0/fusewp.json
+note: >-
+  FuseWP publishes no client SDK for any API of its own — the plugin IS the
+  distributed artifact, and it is an API consumer rather than an API producer.
+  The only public registry distribution is the free "Lite" build in the
+  WordPress.org plugin repository. The commercial Pro build (versioned 2.1.x in
+  lockstep with the 1.1.x Lite build) is distributed only to license holders
+  from fusewp.com/account/ and has no public registry entry, so no version can
+  be read for it from a registry endpoint. Deliberately NOT wired as
+  `type: SDKs` — a WordPress plugin distribution is not a client library for an
+  API, and claiming one would inflate the ergonomics sdk_count check.
+registries_checked:
+- registry: wordpress-org
+  found: true
+- registry: packagist
+  url: https://repo.packagist.org/p2/fusewp/fusewp.json
+  status: 404
+  found: false
+- registry: npm
+  url: https://registry.npmjs.org/fusewp
+  status: 404
+  found: false
+packages:
+- language: php
+  registry: wordpress-org
+  name: fusewp
+  title: FuseWP - Lite
+  url: https://wordpress.org/plugins/fusewp/
+  install: wp plugin install fusewp --activate
+  download: https://downloads.wordpress.org/plugin/fusewp.1.1.26.1.zip
+  source: https://plugins.svn.wordpress.org/fusewp/
+  official: true
+  version: 1.1.26.1
+  published: '2026-08-11'
+  license: GPLv2 or later
+  requires_wordpress: '6.0'
+  tested_wordpress: 7.0.4
+  requires_php: '7.4'
+  first_published: '2023-06-08'
+  downloads_total: 90091
+  rating: 98
+  num_ratings: 25
+  contributors:
+  - fusewp
+  - properfraction
+  - collizo4sky
+  - richienabuk
+  note: >-
+    Registry metadata read unauthenticated from
+    api.wordpress.org/plugins/info/1.0/fusewp.json on 2026-08-12. Currency is
+    healthy — the latest Lite release is dated the day before this probe.
+- language: php
+  registry: null
+  name: fusewp-pro
+  title: FuseWP Pro
+  url: https://fusewp.com/pricing/
+  official: true
+  version: 2.1.26.1
+  published: '2026-08-11'
+  note: >-
+    Commercial build, distributed to license holders only from
+    fusewp.com/account/. No public registry endpoint exists to query, so the
+    version and date here were read from the provider's own published changelog
+    at https://fusewp.com/changelog/ (entry 2.1.26.1, 11 Aug 2026), not from a
+    registry.
+source_repositories:
+- url: https://github.com/fusewp/fusewp
+  status: 200
+  pushed_at: '2026-08-11'
+  note: Mirror of the plugin source; no releases or packages published to a registry from here.
+- url: https://github.com/fusewp/library
+  status: 200
+  language: php
+  pushed_at: '2024-03-16'
+  note: >-
+    Shared PHP library repo, 1 star. Last push 2024-03-16 — stale relative to
+    the plugin's 2026-08-11 release.
+github_organization:
+  url: https://github.com/fusewp
+  id: 130932024
+  public_repos: 2
+  probed: '2026-08-12'

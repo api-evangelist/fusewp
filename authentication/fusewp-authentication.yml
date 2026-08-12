@@ -1,0 +1,132 @@
+generated: '2026-08-12'
+method: probed
+source: https://auth.fusewp.com/
+docs: https://fusewp.com/article/installation-activation/
+note: >-
+  FuseWP publishes no OpenAPI, so no securityScheme could be derived
+  mechanically. This profile was assembled from two real sources: the
+  GPL-licensed first-party plugin source shipped at
+  https://downloads.wordpress.org/plugin/fusewp.1.1.26.1.zip (specifically
+  src/core/src/Integrations/AbstractIntegration.php and
+  src/core/src/Base.php), and live HTTP probes of auth.fusewp.com and
+  fusewp.com on 2026-08-12. Nothing here is inferred from marketing copy.
+summary:
+  types: [oauth2, apiKey]
+  api_key_in: [admin-form]
+  oauth2_flows: [authorizationCode, refreshToken]
+  surfaces: 3
+surfaces:
+- id: oauth-broker
+  name: FuseWP OAuth Broker
+  host: https://auth.fusewp.com
+  type: oauth2
+  role: >-
+    Confidential-client proxy. The FuseWP plugin runs self-hosted on the
+    customer's server and therefore cannot hold OAuth client secrets for the
+    partner platforms. FuseWP registers ONE OAuth application per partner
+    against its own auth.fusewp.com redirect URI and brokers the code exchange
+    and refresh on the customer's behalf.
+  flows:
+  - flow: authorizationCode
+    initiation: GET https://auth.fusewp.com/{integration_id}
+    parameters:
+    - name: fwpnonce
+      in: query
+      required: true
+      description: >-
+        WordPress nonce minted by the plugin as wp_create_nonce("fusewp_{id}_auth");
+        binds the round trip to the originating WordPress admin session.
+    - name: redirect_url
+      in: query
+      required: true
+      description: URL-encoded return address on the customer's own WordPress admin.
+    behaviour: 302 to the partner platform's own authorize endpoint.
+  - flow: refreshToken
+    initiation: GET https://auth.fusewp.com/{integration_id}?refresh_token={token}
+    response: JSON object carrying a boolean `success` field plus refreshed credentials
+    error_handling: >-
+      The plugin treats any response without `success: true` as a failure and
+      increments a local refresh-error counter that feeds a client-side rate
+      limiter (see rate-limits/fusewp-rate-limits.yml).
+    transport_note: >-
+      Called with wp_remote_get and sslverify enabled outside the vendor's local
+      development constant.
+  integration_ids_live:
+  - {id: aweber, partner: AWeber, status: 302}
+  - {id: birdsend, partner: BirdSend, status: 302}
+  - {id: campaignmonitor, partner: Campaign Monitor, status: 302}
+  - {id: constantcontact, partner: Constant Contact, status: 302}
+  - {id: copper, partner: Copper CRM, status: 302}
+  - {id: gohl, partner: GoHighLevel, status: 302}
+  - {id: hubspot, partner: HubSpot, status: 302}
+  - {id: keap, partner: Keap / Infusionsoft, status: 302}
+  - {id: mailchimp, partner: Mailchimp, status: 302}
+  - {id: zohocampaigns, partner: Zoho Campaigns, status: 302}
+  - {id: zohocrm, partner: Zoho CRM, status: 302}
+  integration_ids_erroring:
+  - {id: google_sheet, partner: Google Sheets, status: 500}
+  - {id: salesforce, partner: Salesforce, status: 500}
+  erroring_note: >-
+    Both are documented Pro integrations whose broker path returned HTTP 500 on
+    2026-08-12 with an empty body. Recorded as observed; the cause was not
+    determined and this is not asserted to be a permanent outage.
+- id: mcp-oauth
+  name: fusewp.com MCP OAuth server
+  host: https://fusewp.com
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://fusewp.com/oauth/authorize
+    tokenUrl: https://fusewp.com/oauth/token
+    revocationUrl: https://fusewp.com/oauth/revoke
+    pkce: S256
+    scopes: [mcp]
+  client_auth: none (public client, client_id metadata document supported)
+  bearer_methods: [header]
+  protects: https://fusewp.com/wp-json/mcp/mcp-oauth-server
+  source: well-known/fusewp-oauth-authorization-server.json
+  note: >-
+    Emitted by the WordPress MCP Adapter on FuseWP's own site. See
+    mcp/fusewp-mcp.yml.
+- id: partner-api-keys
+  name: Partner API key entry
+  type: apiKey
+  in: admin-form
+  role: >-
+    For the ~25 partner platforms that do not use OAuth (ActiveCampaign,
+    Klaviyo, Brevo, MailerLite, ConvertKit/Kit, Drip, GetResponse,
+    EmailOctopus, Encharge, Engage.so, Flodesk, Mailjet, Mailercloud,
+    Omnisend, Ortto, Sender, SendPulse, Sendy, beehiiv, Bento, FluentCRM,
+    Groundhogg, MailPoet and others) the site administrator pastes the
+    partner's own API key or key+URL pair into the FuseWP settings screen. The
+    credential is stored in the customer's WordPress options table and used
+    directly against the partner API — it never traverses a FuseWP-operated
+    service.
+  storage: WordPress options table on the customer's own installation
+- id: license-activation
+  name: License activation
+  host: https://fusewp.com
+  type: apiKey
+  role: >-
+    The Pro build activates against Easy Digital Downloads Software Licensing
+    on fusewp.com. The `edd-sl` and `edd` REST namespaces are registered on
+    fusewp.com/wp-json/ and were observed in the namespace listing; the license
+    key is issued to the customer at https://fusewp.com/account/.
+  evidence: namespaces edd, edd-sl, edd/webhooks/v1 present at https://fusewp.com/wp-json/
+inbound_api_of_own:
+  present: false
+  note: >-
+    Grepped the entire shipped plugin for register_rest_route and WP_REST
+    handlers — there are zero. FuseWP exposes no REST API on the customer's
+    WordPress site. Its extension surface is PHP actions and filters
+    (fusewp_loaded, fusewp_profile_update, fusewp_queued_job_handler,
+    fusewp_disable_rate_limiting, fusewp_after_save_oauth_credentials and
+    similar), which are in-process and not addressable over HTTP.
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - {url: 'https://auth.fusewp.com/mailchimp', status: 302}
+  - {url: 'https://auth.fusewp.com/hubspot', status: 302}
+  - {url: 'https://auth.fusewp.com/salesforce', status: 500}
+  - {url: 'https://fusewp.com/.well-known/oauth-authorization-server/', status: 200}
+  source_artifact: downloads.wordpress.org/plugin/fusewp.1.1.26.1.zip

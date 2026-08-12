@@ -1,0 +1,66 @@
+generated: '2026-08-12'
+method: searched
+source: https://fusewp.com/changelog/
+note: >-
+  FuseWP's lifecycle contract is a plugin release contract, not an API
+  contract. There is no versioned API surface to deprecate, so RFC 8594
+  Sunset/Deprecation headers are not applicable rather than missing. The
+  provider publishes no status page and no deprecation policy — both were
+  probed and both are absent. Recorded so the gap is legible instead of
+  inferred.
+versioning:
+  scheme: four-part MAJOR.MINOR.PATCH.HOTFIX on the plugin artifact
+  current:
+    pro: 2.1.26.1
+    lite: 1.1.26.1
+  released: '2026-08-11'
+  first_released: '2023-06-08'
+  docs: https://fusewp.com/changelog/
+  api_versioning: none
+  api_versioning_note: >-
+    auth.fusewp.com carries no version segment or header. See
+    conventions/fusewp-conventions.yml.
+platform_support:
+  requires_wordpress: '6.0'
+  tested_wordpress: 7.0.4
+  requires_php: '7.4'
+  source: https://api.wordpress.org/plugins/info/1.0/fusewp.json
+  note: >-
+    Tested-up-to tracks the current WordPress release, which is a healthy
+    maintenance signal for a plugin distributed this way.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  probed:
+  - {url: 'https://fusewp.com/roadmap/', status: 404}
+  note: >-
+    No published deprecation or end-of-life policy for integrations. Two OAuth
+    broker paths (salesforce, google_sheet) returned HTTP 500 on 2026-08-12
+    with no announcement anywhere in the changelog — an integration can stop
+    resolving without a signal to the consumer.
+status_page:
+  url: null
+  probed:
+  - {url: 'https://status.fusewp.com/', status: 000, detail: DNS does not resolve}
+  - {url: 'https://fusewp.com/status/', status: 404}
+  note: >-
+    No status page. The OAuth broker at auth.fusewp.com is a hard dependency for
+    eleven partner connections and has no published availability signal.
+sla:
+  url: null
+  uptime_target: null
+support:
+  url: https://fusewp.com/support/
+  license_term: >-
+    Yearly licences include one year of support and updates; lifetime licences
+    include support and updates for the life of the product. Expired yearly
+    licences downgrade to the Lite feature set without data deletion.
+  source: https://fusewp.com/pricing/
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-12'
+  probes:
+  - {url: 'https://fusewp.com/changelog/', status: 200}
+  - {url: 'https://status.fusewp.com/', status: 000}
+  - {url: 'https://fusewp.com/status/', status: 404}
+  - {url: 'https://fusewp.com/roadmap/', status: 404}

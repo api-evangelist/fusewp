@@ -1,0 +1,58 @@
+generated: '2026-08-12'
+method: derived
+source: fusewp/src/core/src/Integrations/AbstractIntegration.php (fusewp 1.1.26.1)
+docs: null
+limit_count: 4
+note: >-
+  FuseWP publishes NO rate limits for auth.fusewp.com and returns no
+  RateLimit-*, X-RateLimit-* or Retry-After headers on any response observed on
+  2026-08-12. What is recorded below is the opposite side of the contract: a
+  CLIENT-SIDE circuit breaker the plugin enforces against itself before calling
+  the OAuth broker, read from the shipped GPL source
+  (AbstractIntegration::is_rate_limit_exceeded). It counts consecutive FAILED
+  token refreshes per integration in the WordPress options table and refuses to
+  call the broker again until the window elapses. An agent or integrator cannot
+  observe these limits from a response header — they are enforced in-process on
+  the customer's own server, which is exactly why they are worth recording. The
+  whole breaker is disabled by the `fusewp_disable_rate_limiting` filter, so it
+  is advisory, not a guarantee.
+published_limits:
+  present: false
+  headers_observed: []
+  status_on_exhaustion: null
+  reason: >-
+    auth.fusewp.com answers 302 or 500 only; no throttling headers were returned
+    on any probe.
+client_side_limits:
+- scope: per-integration-per-site
+  surface: https://auth.fusewp.com/{integration_id}?refresh_token=
+  trigger: consecutive failed OAuth token refreshes
+  rules:
+  - {failures_above: 3, blocked_for: 6h}
+  - {failures_above: 6, blocked_for: 12h}
+  - {failures_above: 12, blocked_for: 1h}
+  - {failures_above: 24, blocked_for: 24h}
+  behaviour_on_exhaustion: >-
+    PHP exception "{integration_id}: rate limit exceeded" thrown before the
+    HTTP request is made. Not an HTTP status — the request never leaves the site.
+  counter_reset: on the first successful refresh (delete_oauth_refresh_error_count)
+  storage: >-
+    WordPress options fusewp_oauth_refresh_count_{id} and
+    fusewp_oauth_refresh_time_{id}
+  override_filter: fusewp_disable_rate_limiting
+  note: >-
+    The rules are evaluated in source order and the thresholds are not monotonic
+    — a count above 12 matches the 1-hour rule before the 24-hour rule can apply
+    at counts above 24, so the effective backoff shortens between 12 and 24
+    failures. Recorded as written in the shipped source, not as intended.
+partner_rate_limits:
+  note: >-
+    FuseWP's changelog documents work absorbing PARTNER rate limits rather than
+    imposing its own — "improved beehiiv API rate limit handling" (2.1.26.0,
+    2026-07-02) and "added sender.net API throttling" (2.1.24.2, 2026-01-27).
+    Those limits belong to beehiiv and Sender, not to FuseWP, and are not
+    reproduced here.
+x-evidence:
+  fetched: '2026-08-12'
+  artifact: downloads.wordpress.org/plugin/fusewp.1.1.26.1.zip
+  docs_searched: [https://fusewp.com/docs/, https://fusewp.com/changelog/]

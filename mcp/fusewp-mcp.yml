@@ -1,0 +1,66 @@
+generated: '2026-08-12'
+method: probed
+status: published
+source: https://fusewp.com/.well-known/oauth-protected-resource
+note: >-
+  FuseWP serves a live MCP endpoint from its own host, discovered through RFC
+  9728 OAuth Protected Resource Metadata rather than through any documentation —
+  the provider does not mention MCP anywhere on fusewp.com. The server is the
+  WordPress MCP Adapter running on FuseWP's WordPress site (fusewp.com), so its
+  tools project the SITE's WordPress abilities, not the FuseWP plugin's
+  user-sync feature set. Two server routes are registered under the `mcp`
+  namespace. Both return 401 to an anonymous `tools/list`, so the real tool list
+  and its inputSchemas require an authenticated OAuth introspection that this
+  pipeline does not perform. No tool list is recorded here because none was
+  observed; a guessed one would be fabrication.
+servers:
+- name: mcp-oauth-server
+  transport: http
+  url: https://fusewp.com/wp-json/mcp/mcp-oauth-server
+  methods: [POST, GET, DELETE]
+  auth: oauth2
+  probe:
+    method: tools/list
+    http_status: 401
+    body: '{"code":"mcp_unauthorized","message":"MCP authentication required.","data":{"status":401}}'
+- name: mcp-adapter-default-server
+  transport: http
+  url: https://fusewp.com/wp-json/mcp/mcp-adapter-default-server
+  methods: [POST, GET, DELETE]
+  auth: wordpress-cookie-or-application-password
+  probe:
+    method: tools/list
+    http_status: 401
+    body: '{"code":"rest_forbidden","message":"Sorry, you are not allowed to do that.","data":{"status":401}}'
+discovery:
+  namespace_index: https://fusewp.com/wp-json/mcp
+  namespace_index_status: 200
+  protected_resource_metadata: https://fusewp.com/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://fusewp.com/.well-known/oauth-authorization-server
+authorization:
+  issuer: https://fusewp.com
+  authorization_endpoint: https://fusewp.com/oauth/authorize
+  token_endpoint: https://fusewp.com/oauth/token
+  revocation_endpoint: https://fusewp.com/oauth/revoke
+  grant_types_supported: [authorization_code, refresh_token]
+  code_challenge_methods_supported: [S256]
+  token_endpoint_auth_methods_supported: [none]
+  client_id_metadata_document_supported: true
+  scopes_supported: [mcp]
+  bearer_methods_supported: [header]
+tools: []
+tools_note: >-
+  Auth-gated. FuseWP publishes no llms.txt and no MCP documentation, so there is
+  no secondary source for tool names either. Recording zero observed tools is
+  the honest result.
+related:
+  abilities_api: https://fusewp.com/wp-json/wp-abilities/v1/abilities
+  abilities_api_status: 401
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://fusewp.com/wp-json/mcp/mcp-oauth-server
+  http_status: 401
+  robots_note: >-
+    fusewp.com/robots.txt Disallows /wp-json/ for crawlers. The probes recorded
+    here were single targeted requests against endpoints the provider's own
+    /.well-known/ documents advertise, not a crawl.

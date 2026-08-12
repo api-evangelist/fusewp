@@ -1,0 +1,71 @@
+generated: '2026-08-12'
+method: probed
+source: https://fusewp.com/.well-known/
+note: >-
+  Two real documents were served. fusewp.com publishes RFC 8414 OAuth
+  Authorization Server Metadata and RFC 9728 OAuth Protected Resource Metadata,
+  both of which resolve (via a 301 to the trailing-slash form) to genuine JSON
+  and both of which advertise the `mcp` scope and the MCP endpoint at
+  https://fusewp.com/wp-json/mcp/mcp-oauth-server. These are emitted by the
+  WordPress MCP Adapter running on FuseWP's own WordPress site, not by a
+  purpose-built FuseWP identity service — but the provider does serve them from
+  its own host, which is what the pointer asserts. No security.txt, no
+  openid-configuration, no api-catalog, no ai-plugin.json and no agent card on
+  either host. The OAuth broker host auth.fusewp.com serves no /.well-known/
+  surface at all.
+hosts:
+- host: https://fusewp.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 301
+    redirects_to: /.well-known/oauth-authorization-server/
+    final_status: 200
+    content_type: application/json
+    file: fusewp-oauth-authorization-server.json
+    spec: RFC 8414
+  - path: /.well-known/oauth-protected-resource
+    status: 301
+    redirects_to: /.well-known/oauth-protected-resource/
+    final_status: 200
+    content_type: application/json
+    file: fusewp-oauth-protected-resource.json
+    spec: RFC 9728
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+- host: https://auth.fusewp.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+x-evidence:
+  fetched: '2026-08-12'
+  hosts_probed: 2
+  paths_probed: 18
+  documents_returned: 2

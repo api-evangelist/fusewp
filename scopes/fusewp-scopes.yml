@@ -1,0 +1,119 @@
+generated: '2026-08-12'
+method: probed
+source: https://auth.fusewp.com/
+direction: outbound-delegated
+note: >-
+  READ THIS BEFORE USING THE ROWS BELOW. FuseWP does not issue OAuth scopes of
+  its own — it has no OAuth-protected product API for third parties to call. The
+  one exception is the single `mcp` scope its WordPress MCP server advertises,
+  recorded separately at the bottom. Everything in delegated_scopes[] is the
+  reverse direction: the scope set FuseWP REQUESTS FROM each partner platform
+  when a site administrator connects an account. Each row was read verbatim from
+  the Location header of a live 302 issued by
+  https://auth.fusewp.com/{integration_id} on 2026-08-12 — this is the access
+  FuseWP actually asks for over your CRM, observed rather than documented. The
+  provider publishes no scopes reference page; nothing here comes from prose.
+  Partner client_id values are omitted deliberately: they are public but
+  secret-shaped, and they are not the finding.
+issued_scopes:
+- scope: mcp
+  description: >-
+    The only scope FuseWP itself issues. Advertised in both
+    /.well-known/oauth-authorization-server and
+    /.well-known/oauth-protected-resource; gates the MCP endpoint at
+    https://fusewp.com/wp-json/mcp/mcp-oauth-server.
+  flows: [authorizationCode]
+  pkce: S256
+  sources: [well-known/fusewp-oauth-authorization-server.json]
+delegated_scopes:
+- integration_id: aweber
+  partner: AWeber
+  authorize_host: auth.aweber.com
+  scopes: [account.read, list.read, list.write, subscriber.read, subscriber.write, email.write]
+  status: 302
+- integration_id: birdsend
+  partner: BirdSend
+  authorize_host: app.birdsend.co
+  scopes: [read, write]
+  status: 302
+- integration_id: campaignmonitor
+  partner: Campaign Monitor
+  authorize_host: api.createsend.com
+  scopes: [ManageLists, ImportSubscribers, CreateCampaigns, SendCampaigns]
+  status: 302
+  note: State parameter present; scope delimiter is a comma on this partner.
+- integration_id: constantcontact
+  partner: Constant Contact
+  authorize_host: authz.constantcontact.com
+  scopes: [contact_data, campaign_data, offline_access]
+  status: 302
+- integration_id: copper
+  partner: Copper CRM
+  authorize_host: app.copper.com
+  scopes: ['developer/v1/all']
+  status: 302
+  note: >-
+    Copper exposes no granular scopes — the only value available is full
+    developer API access.
+- integration_id: gohl
+  partner: GoHighLevel
+  authorize_host: marketplace.gohighlevel.com
+  scopes: [contacts.write, contacts.readonly, workflows.readonly, 'locations/tags.write',
+    'locations/tags.readonly', 'locations/customFields.readonly', 'locations/customFields.write']
+  status: 302
+- integration_id: hubspot
+  partner: HubSpot
+  authorize_host: app.hubspot.com
+  scopes: [oauth, crm.objects.owners.read, crm.objects.contacts.write, crm.lists.write,
+    crm.lists.read, crm.schemas.contacts.read, crm.objects.contacts.read]
+  status: 302
+- integration_id: keap
+  partner: Keap / Infusionsoft
+  authorize_host: accounts.infusionsoft.com
+  scopes: [full]
+  status: 302
+  note: >-
+    Keap publishes only a single `full` scope, so connecting FuseWP grants
+    complete account access. A least-privilege limitation of the partner, not of
+    FuseWP.
+- integration_id: mailchimp
+  partner: Mailchimp
+  authorize_host: login.mailchimp.com
+  scopes: []
+  status: 302
+  note: >-
+    Empty scope parameter — Mailchimp's OAuth2 grants full account access to the
+    authorizing user and defines no scope vocabulary.
+- integration_id: zohocrm
+  partner: Zoho CRM
+  authorize_host: accounts.zoho.com
+  scopes: [ZohoCRM.modules.READ, ZohoCRM.modules.CREATE, ZohoCRM.modules.UPDATE,
+    ZohoCRM.users.READ, ZohoCRM.users.CREATE, ZohoCRM.users.UPDATE, ZohoCRM.settings.all]
+  status: 302
+  note: Requests access_type=offline and prompt=consent.
+- integration_id: zohocampaigns
+  partner: Zoho Campaigns
+  authorize_host: accounts.zoho.com
+  scopes: [ZohoCampaigns.contact.CREATE, ZohoCampaigns.contact.READ, ZohoCampaigns.contact.UPDATE,
+    ZohoCampaigns.campaign.READ, ZohoCampaigns.campaign.CREATE, ZohoCampaigns.campaign.UPDATE]
+  status: 302
+  note: >-
+    The redirect_uri returned for this integration is
+    https://auth.fusewp.com/zohocrm rather than /zohocampaigns — the two Zoho
+    integrations share one registered OAuth application. Recorded as observed.
+unresolved:
+- integration_id: google_sheet
+  partner: Google Sheets
+  status: 500
+- integration_id: salesforce
+  partner: Salesforce
+  status: 500
+summary:
+  issued_scope_count: 1
+  delegated_integrations_probed: 13
+  delegated_integrations_resolved: 11
+  write_capable_integrations: 10
+  full_access_integrations: [keap, mailchimp, copper]
+x-evidence:
+  fetched: '2026-08-12'
+  method: 'GET https://auth.fusewp.com/{integration_id}, Location header read without following'

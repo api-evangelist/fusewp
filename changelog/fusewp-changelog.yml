@@ -1,0 +1,93 @@
+generated: '2026-08-12'
+method: searched
+source: https://fusewp.com/changelog/
+scheme: four-part MAJOR.MINOR.PATCH.HOTFIX
+current_version:
+  pro: 2.1.26.1
+  lite: 1.1.26.1
+  released: '2026-08-11'
+note: >-
+  FuseWP maintains a dated public changelog covering the Pro build on the 2.1.x
+  line; the WordPress.org Lite build ships the same MINOR.PATCH.HOTFIX on the
+  1.1.x line and on the same date (1.1.26.1 / 2026-08-11 per
+  api.wordpress.org). Recent window only — the live changelog is the source of
+  truth. No entry in the captured window is marked breaking; the release habit
+  is additive integrations plus fixes, with security patches shipped inline
+  rather than announced separately.
+entries:
+- version: 2.1.26.1
+  date: '2026-08-11'
+  breaking: false
+  additions: [Email address filter for Formidable Forms]
+  fixes:
+  - Bulk-sync failure with WooCommerce Subscriptions when HPOS is enabled
+  - Array mapping error
+- version: 2.1.26.0
+  date: '2026-07-02'
+  breaking: false
+  additions: [Copper CRM integration]
+  fixes:
+  - MemberPress trial and active subscription syncing
+  - beehiiv API rate limit handling
+- version: 2.1.25.2
+  date: '2026-04-13'
+  breaking: false
+  security: [CSRF vulnerability patched in the sync toggle]
+  fixes:
+  - Property access warnings
+  - Sync retry interval changed from one minute to one hour
+- version: 2.1.25.1
+  date: '2026-03-29'
+  breaking: false
+  fixes:
+  - WordPress 7 admin interface compatibility
+  - Salesforce connection bug
+- version: 2.1.25.0
+  date: '2026-03-10'
+  breaking: false
+  additions: [SendPulse, Mailercloud, Bento, Engage.so, Birdsend]
+  fixes: [Sync reliability improved via delayed sync support]
+- version: 2.1.24.2
+  date: '2026-01-27'
+  breaking: false
+  additions: [sender.net API throttling, expanded GetResponse segmentation options]
+  fixes: [Flodesk segment retrieval limitation]
+- version: 2.1.24.1
+  date: '2025-12-04'
+  breaking: false
+  additions: [Job retry mechanism]
+  fixes: [beehiiv timeout increased, MemberPress plan name HTML encoding]
+- version: 2.1.24.0
+  date: '2025-11-20'
+  breaking: false
+  additions: [HubSpot upgraded to v3 API]
+  fixes: [Kit tag assignment bug, reduced memory consumption]
+- version: 2.1.23.1
+  date: '2025-10-24'
+  breaking: false
+  security: [CSRF vulnerability patched in sync rule saving]
+  fixes: [User caching optimised, WooCommerce sync processing filter added]
+- version: 2.1.23.0
+  date: '2025-10-03'
+  breaking: false
+  additions: [FluentCommunity, WS Form, SureForms, AffiliateWP, SliceWP]
+  fixes: [Zoho token refresh corrected for non-US regions]
+- version: 2.1.22.0
+  date: '2025-08-27'
+  breaking: false
+  additions: [Ninja Forms, Formidable Forms, Everest Forms, Sensei LMS, Masterstudy LMS]
+  fixes: [Bulk-sync cron frequency reduced]
+- version: 2.1.21.0
+  date: '2025-07-20'
+  breaking: false
+  additions: [WP Travel Engine, Fluent Forms, Forminator, Sender.net, Groundhogg]
+  fixes: [EDD registration sync issue]
+also_published_at:
+- url: https://wordpress.org/plugins/fusewp/#developers
+  scope: Lite build changelog
+- url: https://plugins.svn.wordpress.org/fusewp/trunk/changelog.txt
+  scope: Lite build changelog, plain text, versioned in SVN
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://fusewp.com/changelog/
+  http_status: 200

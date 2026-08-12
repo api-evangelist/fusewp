@@ -1,0 +1,79 @@
+generated: '2026-08-12'
+method: searched
+source: https://fusewp.com/pricing/
+currency: USD
+plan_count: 7
+note: >-
+  Pricing is per-WordPress-site licensing for the plugin, not per-API-call
+  metering — FuseWP sells no API product and publishes no usage quotas, overage
+  rates or call allowances. Every tier includes the full feature set and every
+  supported CRM; the only variable is the number of sites a licence covers and
+  whether support and updates run for one year or for the product's life. All
+  values read from the published pricing page on 2026-08-12.
+plans:
+- name: Lite
+  price: 0
+  currency: USD
+  period: perpetual
+  sites: 1
+  distribution: https://wordpress.org/plugins/fusewp/
+  included: >-
+    WordPress user-role sync, profile-update sync, unsubscribe on account
+    deletion, bulk sync of existing users, and ten form-plugin integrations
+    (Contact Form 7, Gravity Forms, WPForms, Fluent Forms, Ninja Forms,
+    Formidable Forms, Forminator, Everest Forms, WS Form, SureForms).
+  limits: >-
+    Free build. Ecommerce, LMS and membership sync, custom-field mapping and
+    several CRM connectors (Salesforce, Google Sheets among them) are Pro-only.
+- name: Standard (Yearly)
+  price: 119
+  currency: USD
+  period: year
+  sites: 1
+  included: All features, all supported CRMs, 1 year of support and updates.
+  overage: null
+- name: Plus (Yearly)
+  price: 299
+  currency: USD
+  period: year
+  sites: 3
+  included: All features, all supported CRMs, 1 year of support and updates.
+  overage: null
+- name: Agency (Yearly)
+  price: 499
+  currency: USD
+  period: year
+  sites: unlimited
+  included: All features, all supported CRMs, 1 year of support and updates.
+  overage: null
+- name: Standard (Lifetime)
+  price: 499
+  currency: USD
+  period: one-time
+  sites: 1
+  included: All features, all supported CRMs, lifetime support and updates.
+- name: Plus (Lifetime)
+  price: 999
+  currency: USD
+  period: one-time
+  sites: 3
+  included: All features, all supported CRMs, lifetime support and updates.
+- name: Agency (Lifetime)
+  price: 1399
+  currency: USD
+  period: one-time
+  sites: unlimited
+  included: All features, all supported CRMs, lifetime support and updates.
+terms:
+  refund: 14-day money-back guarantee, conditional on contacting support first about technical issues.
+  renewal: >-
+    Yearly licences downgrade to the Lite plan one year after expiry if not
+    renewed. The provider states no customer data is deleted on expiry.
+  enterprise_contact_only: false
+  free_trial: >-
+    No time-limited trial of Pro; the free Lite build on WordPress.org is the
+    trial path.
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://fusewp.com/pricing/
+  http_status: 200

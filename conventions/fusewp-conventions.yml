@@ -1,0 +1,86 @@
+generated: '2026-08-12'
+method: derived
+source: fusewp/src/core/src/Integrations/AbstractIntegration.php (fusewp 1.1.26.1)
+note: >-
+  Cross-cutting semantics for the one first-party HTTP surface FuseWP operates,
+  the OAuth broker at auth.fusewp.com. There is no published API reference for
+  it, so every field below was read from the GPL-licensed plugin source that
+  calls it, or observed on a live probe. Where FuseWP has no convention, the
+  field says so rather than being omitted — an absent field reads as
+  "not checked".
+authentication:
+  style: oauth2-broker
+  detail: >-
+    No bearer token is presented to auth.fusewp.com. The authorization request
+    is authenticated by a WordPress nonce (`fwpnonce`) minted per integration as
+    wp_create_nonce("fusewp_{id}_auth"); the refresh request is authenticated by
+    presenting the partner refresh token itself as a query parameter.
+  cross_ref: authentication/fusewp-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No idempotency key, no request-deduplication contract, and none is needed by
+    the two GET-shaped operations the broker exposes. Deliberately NOT wired as
+    `type: Idempotency` — the artifact records the absence.
+pagination:
+  supported: false
+  detail: The broker returns no collections.
+versioning:
+  scheme: none-on-the-wire
+  detail: >-
+    auth.fusewp.com carries no version segment, no version header and no
+    date-pinned train. Product versioning is on the plugin artifact instead —
+    four-part MAJOR.MINOR.PATCH.HOTFIX, Lite on the 1.1.x line and Pro on the
+    2.1.x line, released in lockstep.
+  cross_ref: lifecycle/fusewp-lifecycle.yml
+error_envelope:
+  shape: >-
+    JSON object with a boolean `success` field. The client treats the absence of
+    `success: true` as failure and surfaces the raw response body in the thrown
+    exception message.
+  problem_json: false
+  status_codes_observed: [302, 500]
+  detail: >-
+    Failures are not signalled by status code in any documented way — a broken
+    integration path (salesforce, google_sheet) returned HTTP 500 with an empty
+    body on 2026-08-12, with no machine-readable error payload at all.
+request_tracing:
+  request_id_header: null
+  supported: false
+rate_limit_signalling:
+  headers: []
+  detail: Client-side only; see rate-limits/fusewp-rate-limits.yml.
+  cross_ref: rate-limits/fusewp-rate-limits.yml
+transport:
+  tls_verification: >-
+    Enabled (wp_remote_get with sslverify true) except when the vendor's local
+    development constant W3GUY_LOCAL is defined, in which case the base host
+    swaps to auth.fusewp.test.
+  methods: [GET]
+extension_surface:
+  style: wordpress-hooks
+  detail: >-
+    FuseWP's real integration contract for developers is PHP actions and filters
+    inside the customer's WordPress process, not HTTP. There is no published
+    hook reference on fusewp.com; the names below were grepped out of the
+    shipped 1.1.26.1 source.
+  actions:
+  - fusewp_loaded
+  - fusewp_profile_update
+  - fusewp_queued_job_handler
+  - fusewp_after_save_oauth_credentials
+  - fusewp_oauth_disconnection_{id}
+  - fusewp_cache_clearing_{id}
+  - fusewp_admin_hooks
+  - fusewp_register_menu_page
+  - fusewp_sync_register_settings_page_hook
+  filters:
+  - fusewp_disable_rate_limiting
+  rest_routes_registered: 0
+  rest_routes_note: >-
+    Zero register_rest_route calls in the shipped plugin — FuseWP adds no HTTP
+    API to the sites it is installed on.
+x-evidence:
+  fetched: '2026-08-12'
+  artifact: downloads.wordpress.org/plugin/fusewp.1.1.26.1.zip
