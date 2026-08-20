@@ -29,6 +29,17 @@ tags:
 - CRM
 - Integration
 - Data Synchronization
+- Authentication
+- Plugins
+- No-Code
+tags_raw:
+- Company
+- WordPress
+- Email Marketing
+- Marketing Automation
+- CRM
+- Integration
+- Data Synchronization
 - OAuth
 - Plugins
 - No Code
@@ -54,6 +65,10 @@ apis:
   humanURL: https://fusewp.com/docs/
   baseURL: https://auth.fusewp.com
   tags:
+  - Authentication
+  - Authorization
+  - Integration
+  tags_raw:
   - OAuth
   - Authorization
   - Integration
