@@ -14,6 +14,17 @@ description: 'FuseWP is a WordPress automation plugin from the FuseWP Team (Prop
   one first-party HTTP surface is a hosted OAuth broker at auth.fusewp.com that
   holds FuseWP''s OAuth client credentials and brokers the authorization-code and
   refresh-token exchange for the eleven partner platforms that require OAuth.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://fusewp.com/wp-content/uploads/2023/06/fusewp-wordpress-plugin.png
 url: https://raw.githubusercontent.com/api-evangelist/fusewp/refs/heads/main/apis.yml
 x-type: company
