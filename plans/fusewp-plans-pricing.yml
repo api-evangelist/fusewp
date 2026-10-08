@@ -77,3 +77,60 @@ x-evidence:
   fetched: '2026-08-12'
   url: https://fusewp.com/pricing/
   http_status: 200
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units: []
+  plans:
+  - name: Lite
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - one-time
+  - name: Standard (Yearly)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - year
+  - name: Plus (Yearly)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - year
+  - name: Agency (Yearly)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - year
+  - name: Standard (Lifetime)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - one-time
+  - name: Plus (Lifetime)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - one-time
+  - name: Agency (Lifetime)
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - one-time
