@@ -1,5 +1,5 @@
 generated: '2026-10-12'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/fusewp/integrations
 - https://n8n.io/integrations/fusewp/
@@ -10,7 +10,26 @@ checked:
 - https://monid.ai/tools/fusewp
 - https://n8n.io/integrations/fusewp/
 - https://zapier.com/apps/fusewp/integrations
+- wordpress/integrations/wordpress-integration-edges.yml
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: WordPress (own)
+  partner: wordpress
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://wordpress.org/plugins/fusewp/
+  mirror_of: wordpress/integrations/wordpress-integration-edges.yml
+  apps:
+  - FuseWP – WordPress User Sync to Email List & Marketing Automation (Mailchimp, Constant Contact, ActiveCampaign
+    etc.)
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: WordPress plugin
 templates: []
