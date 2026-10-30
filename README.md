@@ -64,5 +64,120 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-FuseWP is a company surfaced via the API Evangelist harvest backlog (source: marketing-integration-graph) and added to the network as a stub for full-pipeline profiling.
-- https://fusewp.com/
+FuseWP is a WordPress automation plugin from the FuseWP Team (ProperFraction) that synchronizes WordPress users, customers, members and form leads with more than thirty email marketing platforms and CRMs — including Mailchimp, ActiveCampaign, Constant Contact, HubSpot, Klaviyo, Brevo, MailerLite, Salesforce, Zoho CRM, Keap, AWeber, GoHighLevel, SendPulse and Google Sheets. It maps WordPress user roles, WooCommerce/EDD orders, LMS enrollments (LearnDash, LifterLMS, Tutor LMS, Sensei), membership plugins (MemberPress, Paid Memberships Pro, Restrict Content Pro) and form submissions (Contact Form 7, Gravity Forms, WPForms, Fluent Forms) to lists, tags and custom fields in the connected platform. FuseWP is primarily an API CONSUMER rather than an API producer: the plugin runs self-hosted inside the customer's WordPress installation and registers no REST routes of its own. Its one first-party HTTP surface is a hosted OAuth broker at auth.fusewp.com that holds FuseWP's OAuth client credentials and brokers the authorization-code and refresh-token exchange for the eleven partner platforms that require OAuth.
+
+**Areas:** Company · WordPress · Email Marketing · Marketing Automation · CRM · Integration · Data Synchronization · Authentication · Plugins · No-Code
+
+## FuseWP on APIs.io
+
+Everything profiled for FuseWP is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/fusewp/](https://apis.io/providers/fusewp/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [FuseWP OAuth Broker](https://apis.io/apis/fusewp/oauth-broker/) — The hosted OAuth authorization broker FuseWP operates at auth.fusewp.com. The self-hosted FuseWP plugin cannot safely hold OAuth client secrets for the…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [fusewp-mcp.yml](https://apis.io/servers/fusewp/fusewp-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Fusewp Authentication](https://apis.io/security/fusewp/fusewp-authentication/)
+- [Fusewp Domain Security](https://apis.io/security/fusewp/fusewp-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Fusewp Scopes](https://apis.io/scopes/fusewp/fusewp-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Fusewp Plans Pricing](https://apis.io/plans/fusewp/fusewp-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Fusewp Rate Limits](https://apis.io/rate-limits/fusewp/fusewp-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://fusewp.com/)
+- [Documentation](https://fusewp.com/docs/)
+- [Getting started](https://fusewp.com/article/installation-activation/)
+- [Pricing](https://fusewp.com/pricing/)
+- [Sign up](https://fusewp.com/pricing/)
+- [Support](https://fusewp.com/support/)
+- [Changelog](https://fusewp.com/changelog/)
+- [Blog](https://fusewp.com/blog/)
+- [Terms of service](https://fusewp.com/terms-conditions/)
+- [Privacy policy](https://fusewp.com/privacy-policy/)
+- [GitHub](https://github.com/fusewp)
+
+## API Evangelist rating
+
+**Kin Score 40.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 50.0 |
+| Access clarity | 76.3 |
+
+**Agent readiness 17.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 34.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/fusewp/](https://apis.io/providers/fusewp/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for FuseWP: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/fusewp/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
